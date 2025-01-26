@@ -1,6 +1,8 @@
 package jpa.projectresearch.API;
 
 import jpa.projectresearch.Dto.ProductDto;
+import jpa.projectresearch.Dto.RasaProduct;
+import jpa.projectresearch.Entity.Product;
 import jpa.projectresearch.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,5 +46,15 @@ public class ProductController {
     public ResponseEntity<String> deleteProduct(@PathVariable Long Id) {
         productService.deleteProduct(Id);
         return new ResponseEntity<>("Product deleted Successfully !", HttpStatus.OK);
+    }
+
+    // api chat bot
+    @PostMapping("/search")
+    public ResponseEntity<?> findProduct(@RequestBody RasaProduct name) {
+        List<Product> product = productService.findByProductNameContainingIgnoreCase(name.getProduct());
+        if(!product.isEmpty()) {
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        }
+        return ResponseEntity.ok("Không tìm thấy sản phẩm");
     }
 }

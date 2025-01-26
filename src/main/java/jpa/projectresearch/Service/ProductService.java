@@ -21,4 +21,6 @@ public interface ProductService {
 
     List<Product> findProductName(String name);
 
+    List<Product> findByProductNameContainingIgnoreCase(String name);
+
 }

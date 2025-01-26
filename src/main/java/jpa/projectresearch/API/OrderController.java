@@ -1,6 +1,8 @@
 package jpa.projectresearch.API;
 
 import jpa.projectresearch.Dto.OrderDto;
+import jpa.projectresearch.Dto.RasaOrder;
+import jpa.projectresearch.Entity.Order;
 import jpa.projectresearch.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,5 +47,15 @@ public class OrderController {
     public ResponseEntity<String> delete(@PathVariable Long Id){
         orderService.DeleteOrder(Id);
         return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
+    }
+
+    // api chat bot
+    @PostMapping("/search")
+    public ResponseEntity<?> findOrder(@RequestBody RasaOrder name){
+        List<OrderDto> orders = orderService.findByOrderNames(name.getOrderName());
+        if(!orders.isEmpty()){
+            return new ResponseEntity<>(orders, HttpStatus.OK);
+        }
+        return ResponseEntity.ok("không tìm thấy đơn hàng");
     }
 }

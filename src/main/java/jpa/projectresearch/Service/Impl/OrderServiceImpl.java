@@ -2,6 +2,7 @@ package jpa.projectresearch.Service.Impl;
 
 import jpa.projectresearch.Dto.OrderDto;
 import jpa.projectresearch.Dto.ProductDto;
+import jpa.projectresearch.Dto.RasaOrder;
 import jpa.projectresearch.Entity.Order;
 import jpa.projectresearch.Entity.Product;
 import jpa.projectresearch.Entity.User;
@@ -54,7 +55,8 @@ public class OrderServiceImpl implements OrderService {
             User user = userRepository.findById(order.getUser().getUserId())
                     .orElseThrow(() -> new RuntimeException("Không tìm thấy User với ID: " + order.getUser().getUserId()));
             // get product when user add
-            order.setUser(user); // Liên kết User vào Order
+            order.setUser(user);
+            order.setOrderName(user.getFullName());// Liên kết User vào Order
         }
         else {
             System.out.println("require much have user to create order");
@@ -101,5 +103,25 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto GetOrderById(Long theId) {
         Order order = orderRepository.findById(theId).orElseThrow(()->new RuntimeException("cannot find category"));
         return OrderMapper.mapOrder(order);
+    }
+
+    @Override
+    public List<Order> finOrderByOrderName(String theName) {
+        return orderRepository.findByOrderNameLike(theName);
+    }
+
+    @Override
+    @Transactional
+    public List<OrderDto> findByOrderNames(String name) {
+        List<Order> orders = orderRepository.findByOrderName(name);
+        List<Order> finalOrders = new ArrayList<>();
+        for (Order order : orders) {
+            if(order.getStatus().equals(Variable.setStatus.Ordered) || order.getStatus().equals(Variable.setStatus.Shipping)){
+                order.setProducts(order.getProducts());
+                System.out.println((order.getProducts()));
+                finalOrders.add(order);
+            }
+        }
+        return finalOrders.stream().map(OrderMapper::mapOrder).collect(Collectors.toList());
     }
 }

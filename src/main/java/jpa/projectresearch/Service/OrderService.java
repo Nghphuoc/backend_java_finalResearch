@@ -1,6 +1,8 @@
 package jpa.projectresearch.Service;
 
 import jpa.projectresearch.Dto.OrderDto;
+import jpa.projectresearch.Dto.RasaOrder;
+import jpa.projectresearch.Entity.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,4 +19,8 @@ public interface OrderService {
     void DeleteOrder(Long theId);
 
     OrderDto GetOrderById(Long theId);
+
+    List<Order> finOrderByOrderName(String theName);
+
+    List<OrderDto> findByOrderNames(String name);
 }

@@ -16,7 +16,7 @@ public class Order {
 
     @Column(name = "status")
     private Variable.setStatus status;
-
+    @Column(name = "order_name")
     private String orderName;
 
     private Date order_date;
