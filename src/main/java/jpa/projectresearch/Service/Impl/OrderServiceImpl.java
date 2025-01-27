@@ -113,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public List<OrderDto> findByOrderNames(String name) {
-        List<Order> orders = orderRepository.findByOrderName(name);
+        List<Order> orders = orderRepository.findByOrderNameContainingIgnoreCase(name);
         List<Order> finalOrders = new ArrayList<>();
         for (Order order : orders) {
             if(order.getStatus().equals(Variable.setStatus.Ordered) || order.getStatus().equals(Variable.setStatus.Shipping)){

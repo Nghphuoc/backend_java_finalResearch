@@ -56,6 +56,6 @@ public class OrderController {
         if(!orders.isEmpty()){
             return new ResponseEntity<>(orders, HttpStatus.OK);
         }
-        return ResponseEntity.ok("không tìm thấy đơn hàng");
+        return ResponseEntity.ok(orders);
     }
 }

@@ -8,6 +8,6 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByOrderNameLike(String orderName);
 
-    List<Order> findByOrderName(String orderName);
+    List<Order> findByOrderNameContainingIgnoreCase(String orderName);
 
 }
