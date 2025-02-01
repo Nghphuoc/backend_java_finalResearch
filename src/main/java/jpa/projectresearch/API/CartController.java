@@ -2,7 +2,6 @@ package jpa.projectresearch.API;
 
 import jpa.projectresearch.Dto.CartDto;
 import jpa.projectresearch.Entity.Cart;
-import jpa.projectresearch.Responsesitory.CartRepository;
 import jpa.projectresearch.Service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,5 +46,17 @@ public class CartController {
     public ResponseEntity<String> delete(@PathVariable Long Id) {
         cartService.deleteCart(Id);
         return ResponseEntity.ok("Deleted successfully!");
+    }
+// add product api
+    @PutMapping("/addProduct/{cartId}/{productId}")
+    public ResponseEntity<?> addProduct(@PathVariable Long cartId, @PathVariable Long productId ) {
+        Cart cart = cartService.addProduct(cartId, productId);
+        return ResponseEntity.ok(cart);
+    }
+
+    @PutMapping("/removeProduct/{cartId}/{productId}")
+    public ResponseEntity<?> removeProduct(@PathVariable Long cartId, @PathVariable Long productId ) {
+        Cart cart = cartService.removeProduct(cartId, productId);
+        return ResponseEntity.ok(cart);
     }
 }

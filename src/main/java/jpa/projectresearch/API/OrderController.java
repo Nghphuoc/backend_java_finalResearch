@@ -2,7 +2,6 @@ package jpa.projectresearch.API;
 
 import jpa.projectresearch.Dto.OrderDto;
 import jpa.projectresearch.Dto.RasaOrder;
-import jpa.projectresearch.Entity.Order;
 import jpa.projectresearch.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<OrderDto>> getAll(){
         List<OrderDto> orderDto = orderService.GetAllOrders();
         return ResponseEntity.ok(orderDto);

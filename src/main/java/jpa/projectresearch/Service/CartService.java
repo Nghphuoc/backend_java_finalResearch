@@ -1,6 +1,6 @@
 package jpa.projectresearch.Service;
-
 import jpa.projectresearch.Dto.CartDto;
+import jpa.projectresearch.Entity.Cart;
 import org.springframework.stereotype.Component;
 
 
@@ -18,4 +18,8 @@ public interface CartService {
     CartDto updateCart(Long id,CartDto cart);
 
     void deleteCart(Long id);
+
+    Cart addProduct(Long id, Long product);
+
+    Cart removeProduct(Long id, Long product);
 }

@@ -1,6 +1,7 @@
 package jpa.projectresearch.Service;
 
 import jpa.projectresearch.Dto.UserDto;
+import jpa.projectresearch.Entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface UserService {
     UserDto getUserById(Long theId);
 
     UserDto getUserByEmail(String theEmail);
+
+    User loadUserByUsername(String username);
 }

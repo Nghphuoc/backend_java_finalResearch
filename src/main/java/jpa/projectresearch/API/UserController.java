@@ -1,9 +1,6 @@
 package jpa.projectresearch.API;
 
-import jpa.projectresearch.Dto.CartDto;
 import jpa.projectresearch.Dto.UserDto;
-import jpa.projectresearch.Mapper.CartMapper;
-
 import jpa.projectresearch.Service.CartService;
 import jpa.projectresearch.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +27,7 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/{Id}")
+    @GetMapping("/personal/{Id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("Id") Long id){
         UserDto user = userService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
@@ -42,7 +39,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{Id}")
+    @PutMapping("/personal/{Id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("Id") Long Id
                                               ,@RequestBody UserDto user){
         UserDto userDto = userService.UpdateUser(Id,user);

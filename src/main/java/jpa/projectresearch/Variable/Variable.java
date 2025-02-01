@@ -6,4 +6,7 @@ public class Variable {
 
     public enum setStatusBanking{vnPay, VietComBank, Momo, Cash}
 
+    public enum AppRole{ROLE_USER,
+        ROLE_ADMIN,}
+
 }

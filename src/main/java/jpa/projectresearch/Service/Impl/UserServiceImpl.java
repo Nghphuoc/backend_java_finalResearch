@@ -2,7 +2,6 @@ package jpa.projectresearch.Service.Impl;
 
 import jpa.projectresearch.Dto.UserDto;
 import jpa.projectresearch.Entity.Cart;
-import jpa.projectresearch.Entity.Product;
 import jpa.projectresearch.Entity.User;
 import jpa.projectresearch.Mapper.UserMapper;
 import jpa.projectresearch.Responsesitory.CartRepository;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +35,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto CreateUser(UserDto userDto) {
         User user = UserMapper.mapUserDto(userDto);
+        user.setRole(userDto.getRole());
+        user.setCredentialsExpiryDate(LocalDate.now().plusYears(1));
+        user.setAccountExpiryDate(LocalDate.now().plusYears(1));
+        user.setSignUpMethod("email");
+        user.setTwoFactorSecret(userDto.getRole().getRoleName().toString());
         Cart cart = new Cart(user.getFullName(),0D);
         user.setCart(cart);
         User savedUser = userRepository.save(user);
@@ -43,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto UpdateUser(Long id,UserDto userDto) {
+    public UserDto UpdateUser(Long id,UserDto userDto){
         User userUpdate = userRepository.findById(id).orElseThrow(()->new RuntimeException("cannot find by id: "+id));
         userUpdate.setFullName(userDto.getFullName());
         userUpdate.setEmail(userDto.getEmail());
@@ -73,5 +78,11 @@ public class UserServiceImpl implements UserService {
     public UserDto getUserByEmail(String theEmail) {
         User user = userRepository.findByEmail(theEmail).orElseThrow(()->new RuntimeException("cannot find by email: "+theEmail));
         return UserMapper.mapUser(user);
+    }
+
+    @Override
+    public User loadUserByUsername(String username) {
+        User user = userRepository.findByEmail(username).orElseThrow(() -> new RuntimeException ("User Not Found with username: " + username));
+        return user;
     }
 }
