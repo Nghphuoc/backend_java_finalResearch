@@ -32,6 +32,11 @@ public class Security {
 
         http.authorizeHttpRequests(requests -> requests
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Cho phép OPTIONS
+                // Các endpoint chung
+                .requestMatchers(HttpMethod.POST, "/api/order/search").permitAll() // Cho phép truy cập công khai
+                .requestMatchers(HttpMethod.GET, "/api/product/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/product/search").permitAll()
+                .requestMatchers( "/api/product").permitAll()
                 .requestMatchers("/api/auth/public/**").permitAll() // Cho phép truy cập công khai
 
                 // Các endpoint cụ thể cho USER
@@ -50,10 +55,7 @@ public class Security {
                 .requestMatchers("/api/category/**").hasRole("ADMIN")
                 .requestMatchers("/api/user/**").hasRole("ADMIN")
 
-                // Các endpoint chung
-                .requestMatchers(HttpMethod.POST, "/api/order/search").permitAll() // Cho phép truy cập công khai
-                .requestMatchers(HttpMethod.GET, "/api/product/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/product/search").permitAll()
+
 
                 // Bất kỳ request nào khác cần xác thực
                 .anyRequest().authenticated()

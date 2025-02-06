@@ -1,5 +1,7 @@
 package jpa.projectresearch.Service.Impl;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import jpa.projectresearch.Dto.ProductDto;
 import jpa.projectresearch.Entity.Category;
 import jpa.projectresearch.Entity.Product;
@@ -10,8 +12,11 @@ import jpa.projectresearch.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +27,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    private Cloudinary cloudinary;
+
+    private String uploadImage(MultipartFile file) throws IOException {
+        Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+        return uploadResult.get("secure_url").toString(); // Lấy URL ảnh
+    }
 
     @Override
     @Transactional
@@ -37,20 +50,42 @@ public class ProductServiceImpl implements ProductService {
         return ProductMapper.mapProduct(product);
     }
 
+
+    public class ProductImageUploadException extends RuntimeException {
+        public ProductImageUploadException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
+
+
     @Override
     @Transactional
-    public ProductDto createProduct(ProductDto productDto) {
+    public ProductDto createProduct(ProductDto productDto, MultipartFile file) {
+        // Upload image to Cloudinary and get the image URL
+        String imageUrl;
+        try {
+            imageUrl = uploadImage(file);  // uploadImage() should handle file uploading and return the URL
+        } catch (IOException e) {
+            throw new ProductImageUploadException("Failed to upload product image", e);  // Custom exception for clarity
+        }
 
+        // Map the ProductDto to Product entity
         Product product = ProductMapper.mapProductDto(productDto);
-        // fix here
-        if(product.getCategories() != null && !product.getCategories().isEmpty()) {
+        product.setImageUrl(imageUrl);  // Set image URL in the Product entity
+
+        // Ensure categories are not null and set them properly
+        if (product.getCategories() != null && !product.getCategories().isEmpty()) {
             List<Category> categories = product.getCategories().stream()
                     .map(category -> categoryRepository.findById(category.getCategoryId())
-                            .orElseThrow(() -> new IllegalArgumentException("Product not found")))
-                    .collect(Collectors.toList());
+                            .orElseThrow(() -> new IllegalArgumentException("Category not found")))
+                    .collect(Collectors.toList());  // Using Collectors.toList()
             product.setCategories(categories);
         }
+
+        // Save the product to the database
         Product savedProduct = productRepository.save(product);
+
+        // Return the mapped ProductDto
         return ProductMapper.mapProduct(savedProduct);
     }
 

@@ -3,6 +3,7 @@ package jpa.projectresearch.Service;
 import jpa.projectresearch.Dto.ProductDto;
 import jpa.projectresearch.Entity.Product;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface ProductService {
 
     ProductDto getProductById(Long id);
 
-    ProductDto createProduct(ProductDto productDto);
+    ProductDto createProduct(ProductDto productDto, MultipartFile file);
 
     ProductDto updateProduct(Long id,ProductDto productDto);
 

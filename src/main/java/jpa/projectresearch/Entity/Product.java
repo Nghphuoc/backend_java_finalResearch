@@ -172,4 +172,21 @@ public class Product {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", stock_quantity=" + stock_quantity +
+                ", number_Of_Purchases=" + number_Of_Purchases +
+                ", carts=" + carts +
+                ", categories=" + categories +
+                ", orders=" + orders +
+                ", user=" + user +
+                '}';
+    }
 }
