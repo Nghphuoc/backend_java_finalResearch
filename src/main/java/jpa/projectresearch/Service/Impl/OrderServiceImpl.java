@@ -61,16 +61,16 @@ public class OrderServiceImpl implements OrderService {
         else {
             System.out.println("require much have user to create order");
         }
-        if(order.getProducts() != null && !order.getProducts().isEmpty()){
-            List<Product> products = order.getProducts().stream()
-                    .map(product -> productRepository.findById(product.getProductId())
-                            .orElseThrow(() -> new IllegalArgumentException("Product not found")))
+        if(orderDto.getProductQuantities() != null && !orderDto.getProductQuantities().isEmpty()) {
+            List<Product> products = orderDto.getProductQuantities().stream()
+                    .map(pqDto -> productRepository.findById(pqDto.getProductId())
+                            .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + pqDto.getProductId())))
                     .collect(Collectors.toList());
             order.setProducts(products);
+        } else {
+            throw new IllegalArgumentException("Order must contain at least one product.");
         }
-        else {
-            System.out.println("require much have product to create order");
-        }
+
         // Lưu Order vào cơ sở dữ liệu
         Order savedOrder = orderRepository.save(order);
         return OrderMapper.mapOrder(savedOrder);
@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
         orderUpdate.setOrderName(order.getOrderName());
         orderUpdate.setOrder_date(order.getOrder_date());
         orderUpdate.setStatus(order.getStatus());
-        orderUpdate.setProducts(order.getProducts());
+       // orderUpdate.setProducts(order.getProductQuantities());
         orderUpdate.setCheckPayment(order.getCheckPayment());
         orderUpdate.setNote(order.getNote());
         orderUpdate.setCheckPayment(order.getCheckPayment());

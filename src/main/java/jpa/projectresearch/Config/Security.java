@@ -32,18 +32,20 @@ public class Security {
 
         http.authorizeHttpRequests(requests -> requests
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Cho phép OPTIONS
+                .requestMatchers("/api/auth/public/**").permitAll() // Cho phép truy cập công khai
                 // Các endpoint chung
                 .requestMatchers(HttpMethod.POST, "/api/order/search").permitAll() // Cho phép truy cập công khai
                 .requestMatchers(HttpMethod.GET, "/api/product/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/product/search").permitAll()
                 .requestMatchers( "/api/product").permitAll()
-                .requestMatchers("/api/auth/public/**").permitAll() // Cho phép truy cập công khai
-
+                .requestMatchers(HttpMethod.POST, "/api/user/info").hasRole("USER")
                 // Các endpoint cụ thể cho USER
                 .requestMatchers(HttpMethod.GET, "/api/cart/**").hasRole("USER")
                 .requestMatchers(HttpMethod.PUT, "/api/cart/**").hasRole("USER") // add product on cart remove or update info
                 .requestMatchers(HttpMethod.GET, "/api/category").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/order/**").hasAnyRole("USER","ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/order/**").hasAnyRole("USER","ADMIN")
+
                 .requestMatchers(HttpMethod.PUT, "/api/order/**").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/user/personal/**").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/user/personal/**").hasRole("USER")

@@ -32,6 +32,7 @@ public class Cart {
     @JsonIgnore
     private List<Product> products;
 
+
     public void addProduct(Product product) { // use for personal when customer add product on cart
         if(products == null) {
             products = new ArrayList<>();

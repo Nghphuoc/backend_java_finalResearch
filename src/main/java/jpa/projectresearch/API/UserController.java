@@ -1,18 +1,20 @@
 package jpa.projectresearch.API;
 
 import jpa.projectresearch.Dto.UserDto;
+import jpa.projectresearch.RequestUser.LoginRequest;
 import jpa.projectresearch.Service.CartService;
 import jpa.projectresearch.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequestMapping("/api/user")
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class UserController {
 
     @Autowired
@@ -50,5 +52,11 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable("Id") Long Id){
          userService.DeleteUser(Id);
          return new ResponseEntity<>("User deleted successfully !", HttpStatus.OK);
+    }
+
+    @PostMapping("/info")
+    public ResponseEntity<UserDto> getAllUsersInfo(@RequestBody LoginRequest loginRequest){
+        UserDto user = userService.getUserByEmail(loginRequest.getEmail());
+        return  ResponseEntity.ok(user);
     }
 }

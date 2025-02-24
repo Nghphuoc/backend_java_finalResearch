@@ -2,8 +2,8 @@ package jpa.projectresearch.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jpa.projectresearch.Variable.Variable;
-import java.util.Date;
-import java.util.List;
+
+import java.util.*;
 
 @Entity
 @Table(name = "orders")
@@ -35,6 +35,25 @@ public class Order {
     )
     @JsonIgnore
     private List<Product> products;
+
+
+    @ElementCollection
+    @CollectionTable(name = "order_product_quantity", joinColumns = @JoinColumn(name = "order_id"))
+    @MapKeyJoinColumn(name = "product_id")
+    @Column(name = "quantity")
+    private Map<Product, Integer> productQuantities = new HashMap<>();
+
+
+    public void addProduct(Product product) {
+        if(products == null) {
+            products = new ArrayList<Product>();
+        }
+        products.add(product);
+    }
+
+    public void removeProduct(Product product) {
+        products.set(products.indexOf(product), null);
+    }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
@@ -132,6 +151,14 @@ public class Order {
 
     public void setStatusBanking(Variable.setStatusBanking statusBanking) {
         this.statusBanking = statusBanking;
+    }
+
+    public Map<Product, Integer> getProductQuantities() {
+        return productQuantities;
+    }
+
+    public void setProductQuantities(Map<Product, Integer> productQuantities) {
+        this.productQuantities = productQuantities;
     }
 
     public Order(){

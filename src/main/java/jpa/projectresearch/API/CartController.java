@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 @RequestMapping("/api/cart")
 public class CartController {
@@ -25,7 +25,7 @@ public class CartController {
     }
 
     @GetMapping("/{Id}") // use this
-    public ResponseEntity<CartDto> getById(@PathVariable Long Id) {
+    public ResponseEntity<CartDto> getById(@PathVariable("Id") Long Id) {
         CartDto cartDto = cartService.getCartById(Id);
         return ResponseEntity.ok(cartDto);
     }
@@ -37,7 +37,7 @@ public class CartController {
     }
 
     @PutMapping("/{Id}")
-    public ResponseEntity<CartDto> update(@PathVariable Long Id, @RequestBody CartDto cartDto) {
+    public ResponseEntity<CartDto> update(@PathVariable("Id") Long Id, @RequestBody CartDto cartDto) {
         CartDto cartDtoUpdated = cartService.updateCart(Id, cartDto);
         return new ResponseEntity<>(cartDtoUpdated, HttpStatus.OK);
     }
