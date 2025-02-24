@@ -25,9 +25,20 @@ public class OrderMapper {
         List<ProductQuantityDto> productDtos = order.getProductQuantities()
                 .entrySet()
                 .stream()
-                .map(entry -> new ProductQuantityDto(entry.getKey().getProductId(), entry.getValue()))
+                .map(entry -> {
+                    Product product = entry.getKey();
+                    return new ProductQuantityDto(
+                            product.getProductId(),
+                            entry.getValue(), // quantity
+                            product.getProductName(),
+                            product.getDescription(),
+                            product.getPrice(),
+                            product.getImageUrl(),
+                            product.getStock_quantity(),
+                            product.getNumber_Of_Purchases()
+                    );
+                })
                 .collect(Collectors.toList());
-
         orderDto.setProductQuantities(productDtos);
 
         return orderDto;
@@ -50,6 +61,13 @@ public class OrderMapper {
                 Product product = new Product();
                 product.setProductId(pqDto.getProductId()); // Chỉ cần set ID, không cần toàn bộ object
                 productQuantities.put(product, pqDto.getQuantity());
+                product.setProductName(pqDto.getProductName());
+                product.setDescription(pqDto.getDescription());
+                product.setPrice(pqDto.getPrice());
+                product.setImageUrl(pqDto.getImageUrl());
+                product.setStock_quantity(pqDto.getStock_quantity());
+                product.setNumber_Of_Purchases(pqDto.getNumber_Of_Purchases());
+
             }
             order.setProductQuantities(productQuantities);
         }

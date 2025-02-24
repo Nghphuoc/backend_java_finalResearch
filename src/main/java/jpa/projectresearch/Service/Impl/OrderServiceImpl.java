@@ -67,6 +67,7 @@ public class OrderServiceImpl implements OrderService {
                             .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + pqDto.getProductId())))
                     .collect(Collectors.toList());
             order.setProducts(products);
+
         } else {
             throw new IllegalArgumentException("Order must contain at least one product.");
         }
@@ -83,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
         orderUpdate.setOrderName(order.getOrderName());
         orderUpdate.setOrder_date(order.getOrder_date());
         orderUpdate.setStatus(order.getStatus());
-       // orderUpdate.setProducts(order.getProductQuantities());
+//        orderUpdate.setProducts(order.getProductList());
         orderUpdate.setCheckPayment(order.getCheckPayment());
         orderUpdate.setNote(order.getNote());
         orderUpdate.setCheckPayment(order.getCheckPayment());
