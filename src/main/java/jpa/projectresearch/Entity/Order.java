@@ -27,6 +27,8 @@ public class Order {
 
     private Variable.setStatusBanking statusBanking;
 
+    private Double totalPrice;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "order_item",
@@ -37,12 +39,16 @@ public class Order {
     private List<Product> products;
 
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "order_product_quantity", joinColumns = @JoinColumn(name = "order_id"))
     @MapKeyJoinColumn(name = "product_id")
     @Column(name = "quantity")
     private Map<Product, Integer> productQuantities = new HashMap<>();
 
+    @PreRemove
+    private void removeProductQuantities() {
+        this.productQuantities.clear();
+    }
 
     public void addProduct(Product product) {
         if(products == null) {
@@ -159,6 +165,28 @@ public class Order {
 
     public void setProductQuantities(Map<Product, Integer> productQuantities) {
         this.productQuantities = productQuantities;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Order(Long orderId, Variable.setStatus status, String orderName, Date order_date, Boolean checkPayment, String note, Variable.setStatusBanking statusBanking, Double totalPrice, List<Product> products, Map<Product, Integer> productQuantities, User user) {
+        this.orderId = orderId;
+        this.status = status;
+        this.orderName = orderName;
+        this.order_date = order_date;
+        this.checkPayment = checkPayment;
+        this.note = note;
+        this.statusBanking = statusBanking;
+        this.totalPrice = totalPrice;
+        this.products = products;
+        this.productQuantities = productQuantities;
+        this.user = user;
     }
 
     public Order(){

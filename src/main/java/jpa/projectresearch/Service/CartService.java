@@ -22,4 +22,6 @@ public interface CartService {
     Cart addProduct(Long id, Long product);
 
     Cart removeProduct(Long id, Long product);
+
+    Cart deleteProductToCart(Long id, List<Long> product);
 }

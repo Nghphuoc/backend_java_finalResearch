@@ -1,7 +1,7 @@
 package jpa.projectresearch.Mapper;
 
 import jpa.projectresearch.Dto.OrderDto;
-import jpa.projectresearch.Dto.OrderDto.ProductQuantityDto;
+import jpa.projectresearch.Dto.ProductQuantityDto;
 import jpa.projectresearch.Entity.Order;
 import jpa.projectresearch.Entity.Product;
 
@@ -20,6 +20,7 @@ public class OrderMapper {
         orderDto.setNote(order.getNote());
         orderDto.setStatusBanking(order.getStatusBanking());
         orderDto.setUser(order.getUser());
+        orderDto.setTotalPrice(order.getTotalPrice());
 
         // Chuyển đổi từ Map<Product, Integer> sang List<ProductQuantityDto>
         List<ProductQuantityDto> productDtos = order.getProductQuantities()
@@ -54,10 +55,11 @@ public class OrderMapper {
         order.setNote(orderDto.getNote());
         order.setStatusBanking(orderDto.getStatusBanking());
         order.setUser(orderDto.getUser());
+        order.setTotalPrice(orderDto.getTotalPrice());
 
         if (orderDto.getProductQuantities() != null) {
             Map<Product, Integer> productQuantities = new HashMap<>();
-            for (OrderDto.ProductQuantityDto pqDto : orderDto.getProductQuantities()) {
+            for (ProductQuantityDto pqDto : orderDto.getProductQuantities()) {
                 Product product = new Product();
                 product.setProductId(pqDto.getProductId()); // Chỉ cần set ID, không cần toàn bộ object
                 productQuantities.put(product, pqDto.getQuantity());

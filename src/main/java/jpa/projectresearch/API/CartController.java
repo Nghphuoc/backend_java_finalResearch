@@ -59,4 +59,10 @@ public class CartController {
         Cart cart = cartService.removeProduct(cartId, productId);
         return ResponseEntity.ok(cart);
     }
+
+    @PutMapping("/removeProductDetail/{cartId}/{productId}")
+    public ResponseEntity<?> deleteProductToCart(@PathVariable Long cartId, @PathVariable List<Long> productId ) {
+        Cart cart = cartService.deleteProductToCart(cartId,productId);
+        return ResponseEntity.ok(cart);
+    }
 }

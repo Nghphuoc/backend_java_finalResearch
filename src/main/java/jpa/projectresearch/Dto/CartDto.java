@@ -18,7 +18,9 @@ public class CartDto {
 
     private User user;
 
-    private List<Product> products;
+
+    private List<ProductQuantityDto> productCartQuantities;
+
 
     public Long getCartId() {
         return cartId;
@@ -52,26 +54,37 @@ public class CartDto {
         this.user = user;
     }
 
-    public List<Product> getProducts() {
-        return products;
+
+
+    public List<ProductQuantityDto> getProductCartQuantities() {
+        return productCartQuantities;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProductCartQuantities(List<ProductQuantityDto> productCartQuantities) {
+        this.productCartQuantities = productCartQuantities;
     }
 
-    public CartDto(Long cartId, String userName, Double quantity, User user, List<Product> products) {
+    public CartDto(Long cartId, String userName, Double quantity, User user) {
         this.cartId = cartId;
         this.userName = userName;
         this.quantity = quantity;
         this.user = user;
-        this.products = products;
+
     }
 
     public CartDto(Long cartId, String userName, Double quantity){
         this.cartId = cartId;
         this.userName = userName;
         this.quantity = quantity;
+    }
+
+    public CartDto(Long cartId, String userName, Double quantity, User user, List<ProductQuantityDto> productCartQuantities) {
+        this.cartId = cartId;
+        this.userName = userName;
+        this.quantity = quantity;
+        this.user = user;
+
+        this.productCartQuantities = productCartQuantities;
     }
 
     public CartDto(){

@@ -3,7 +3,9 @@ package jpa.projectresearch.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "cart")
@@ -30,8 +32,15 @@ public class Cart {
         inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     @JsonIgnore
+
     private List<Product> products;
 
+    @ElementCollection
+    @CollectionTable(name = "cart_product_quantity", joinColumns = @JoinColumn(name = "cart_id"))
+    @MapKeyJoinColumn(name = "product_id")
+    @Column(name = "quantity")
+
+    private Map<Product, Integer> productQuantities = new HashMap<>();
 
     public void addProduct(Product product) { // use for personal when customer add product on cart
         if(products == null) {
@@ -96,7 +105,15 @@ public class Cart {
 
     }
 
-    public Cart( String userName, Double quantity) {
+    public Map<Product, Integer> getProductQuantities() {
+        return productQuantities;
+    }
+
+    public void setProductQuantities(Map<Product, Integer> productQuantities) {
+        this.productQuantities = productQuantities;
+    }
+
+    public Cart(String userName, Double quantity) {
 
         this.userName = userName;
         this.quantity = quantity;

@@ -48,7 +48,7 @@ public class Security {
 
                 .requestMatchers(HttpMethod.PUT, "/api/order/**").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/user/personal/**").hasAnyRole("USER","ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/user/personal/**").hasRole("USER")
+//                .requestMatchers(HttpMethod.PUT, "/api/user/personal/**").hasRole("USER")
 
                 // Các endpoint cụ thể cho ADMIN
                 .requestMatchers("/api/order/**").hasRole("ADMIN")

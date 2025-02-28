@@ -110,6 +110,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void deleteProduct(Long id) {
         Product product = productRepository.findById(id).orElseThrow(()->new RuntimeException("cannot find product with id: " + id));
+        productRepository.deleteProductQuantitiesByProductId(id);
         productRepository.delete(product);
     }
 

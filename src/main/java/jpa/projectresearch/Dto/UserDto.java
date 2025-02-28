@@ -30,6 +30,7 @@ public class UserDto {
     private Cart cart;
 
     private List<Order> orders;
+
     private boolean accountNonLocked;
     private boolean accountNonExpired;
     private boolean credentialsNonExpired;
