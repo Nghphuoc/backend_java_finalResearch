@@ -33,7 +33,10 @@ public class Security {
         http.authorizeHttpRequests(requests -> requests
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Cho phép OPTIONS
                 .requestMatchers("/api/auth/public/**").permitAll() // Cho phép truy cập công khai
-                // Các endpoint chung
+                .requestMatchers("/api/payment/**").permitAll()
+                .requestMatchers("/favicon.ico/**").permitAll()
+
+
                 .requestMatchers(HttpMethod.POST, "/api/order/search").permitAll() // Cho phép truy cập công khai
                 .requestMatchers(HttpMethod.GET, "/api/product/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/product/search").permitAll()
