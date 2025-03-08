@@ -1,6 +1,4 @@
 package jpa.projectresearch.Dto;
-
-import jpa.projectresearch.Entity.Product;
 import jpa.projectresearch.Entity.User;
 import jpa.projectresearch.Variable.Variable;
 import java.util.Date;
@@ -19,8 +17,6 @@ public class OrderDto {
     private Double totalPrice;
     // Chỉ giữ danh sách ProductQuantityDto thay vì List<Product>
     private List<ProductQuantityDto> productQuantities;
-
-
 
 
     // Getters & Setters

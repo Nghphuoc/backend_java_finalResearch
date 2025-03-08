@@ -70,7 +70,7 @@ public class Product {
 
     }
 
-    public Product(Long productId, String productName, String description, Double price, String imageUrl, int stock_quantity,int number_Of_Purchases, List<Cart> carts, List<Category> categories, List<Order> orders, User user) {
+    public Product(Long productId, String productName, String description, Double price, String imageUrl, int stock_quantity,int number_Of_Purchases, List<Category> categories, User user) {
         this.productId = productId;
         this.productName = productName;
         this.description = description;
@@ -79,8 +79,6 @@ public class Product {
         this.stock_quantity = stock_quantity;
         this.categories = categories;
         this.number_Of_Purchases = number_Of_Purchases;
-        this.carts = carts;
-        this.orders = orders;
         this.user = user;
 
     }

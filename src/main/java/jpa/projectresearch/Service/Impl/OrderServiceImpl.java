@@ -2,6 +2,7 @@ package jpa.projectresearch.Service.Impl;
 
 import jpa.projectresearch.Dto.OrderDto;
 import jpa.projectresearch.Dto.ProductDto;
+import jpa.projectresearch.Dto.ProductQuantityDto;
 import jpa.projectresearch.Dto.RasaOrder;
 import jpa.projectresearch.Entity.Order;
 import jpa.projectresearch.Entity.Product;
@@ -49,7 +50,6 @@ public class OrderServiceImpl implements OrderService {
             order.setCheckPayment(false);
             order.setStatusBanking(Variable.setStatusBanking.Cash);
         }
-
         // Kiểm tra và lấy User từ cơ sở dữ liệu
         if (order.getUser() != null && order.getUser().getUserId() != null ) {
             User user = userRepository.findById(order.getUser().getUserId())
@@ -68,6 +68,15 @@ public class OrderServiceImpl implements OrderService {
                     .collect(Collectors.toList());
             order.setProducts(products);
 
+            for(ProductQuantityDto product : orderDto.getProductQuantities()){
+                Product productData = productRepository.findById(product.getProductId()).orElseThrow(()->new RuntimeException("cannot find category"));
+                int number = productData.getStock_quantity() - product.getQuantity();
+
+                int numberOfPurchases = productData.getNumber_Of_Purchases();
+                productData.setNumber_Of_Purchases(numberOfPurchases + product.getQuantity());
+                productData.setStock_quantity(number);
+                productRepository.save(productData);
+            }
         } else {
             throw new IllegalArgumentException("Order must contain at least one product.");
         }
@@ -107,6 +116,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public List<Order> finOrderByOrderName(String theName) {
         return orderRepository.findByOrderNameLike(theName);
     }

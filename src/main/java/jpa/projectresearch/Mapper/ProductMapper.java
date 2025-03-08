@@ -14,9 +14,7 @@ public class ProductMapper {
                 product.getImageUrl(),
                 product.getStock_quantity(),
                 product.getNumber_Of_Purchases(),
-                product.getCarts(),
                 product.getCategories(),
-                product.getOrders(),
                 product.getUser()
         );
     }
@@ -30,9 +28,7 @@ public class ProductMapper {
                 productDto.getImageUrl(),
                 productDto.getStock_quantity(),
                 productDto.getNumber_Of_Purchases(),
-                productDto.getCarts(),
                 productDto.getCategories(),
-                productDto.getOrders(),
                 productDto.getUser()
         );
     }

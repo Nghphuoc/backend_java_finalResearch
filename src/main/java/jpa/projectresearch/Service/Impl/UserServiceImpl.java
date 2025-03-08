@@ -8,6 +8,7 @@ import jpa.projectresearch.Responsesitory.CartRepository;
 import jpa.projectresearch.Responsesitory.UserRepository;
 import jpa.projectresearch.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     CartRepository cartRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -84,5 +88,15 @@ public class UserServiceImpl implements UserService {
     public User loadUserByUsername(String username) {
         User user = userRepository.findByEmail(username).orElseThrow(() -> new RuntimeException ("User Not Found with username: " + username));
         return user;
+    }
+
+    @Override
+    public void updateUser(String email, String phone, String password) {
+        User user = userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("cannot find by email: "+email));
+        if(user.getPhone().equals(phone)){
+            user.setPassword(passwordEncoder.encode(password));
+            userRepository.save(user);
+        }
+
     }
 }

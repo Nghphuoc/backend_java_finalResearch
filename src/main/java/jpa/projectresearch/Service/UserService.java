@@ -22,4 +22,6 @@ public interface UserService {
     UserDto getUserByEmail(String theEmail);
 
     User loadUserByUsername(String username);
+
+    void updateUser(String email, String phone, String password);
 }

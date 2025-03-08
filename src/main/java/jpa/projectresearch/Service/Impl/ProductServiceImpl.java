@@ -99,9 +99,7 @@ public class ProductServiceImpl implements ProductService {
         productUpdate.setCategories(productDto.getCategories());
         productUpdate.setImageUrl(productDto.getImageUrl());
         productUpdate.setStock_quantity(productDto.getStock_quantity());
-        productUpdate.setCarts(productDto.getCarts());
         productUpdate.setCategories(productDto.getCategories());
-        productUpdate.setOrders(productDto.getOrders());
         Product savedProduct = productRepository.save(productUpdate);
         return ProductMapper.mapProduct(savedProduct);
     }

@@ -26,16 +26,16 @@ public class ProductDto {
 
     private int number_Of_Purchases;
 
-    private List<Cart> carts;
+
 
     private List<Category> categories;
 
-    private List<Order> orders;
+
 
     private User user;
 
 
-    public ProductDto(Long productId, String productName, String description, Double price, String imageUrl, int stock_quantity, int number_Of_Purchases, List<Cart> carts, List<Category> categories, List<Order> orders,User user) {
+    public ProductDto(Long productId, String productName, String description, Double price, String imageUrl, int stock_quantity, int number_Of_Purchases, List<Category> categories, User user) {
         this.productId = productId;
         this.productName = productName;
         this.description = description;
@@ -43,9 +43,7 @@ public class ProductDto {
         this.imageUrl = imageUrl;
         this.stock_quantity = stock_quantity;
         this.number_Of_Purchases = number_Of_Purchases;
-        this.carts = carts;
         this.categories = categories;
-        this.orders = orders;
         this.user = user;
     }
 
@@ -105,13 +103,6 @@ public class ProductDto {
         this.stock_quantity = stock_quantity;
     }
 
-    public List<Cart> getCarts() {
-        return carts;
-    }
-
-    public void setCarts(List<Cart> carts) {
-        this.carts = carts;
-    }
 
     public List<Category> getCategories() {
         return categories;
@@ -121,13 +112,7 @@ public class ProductDto {
         this.categories = categories;
     }
 
-    public List<Order> getOrders() {
-        return orders;
-    }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
 
     public User getUser() {
         return user;

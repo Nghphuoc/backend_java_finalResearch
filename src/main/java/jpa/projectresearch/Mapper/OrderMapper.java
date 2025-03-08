@@ -36,7 +36,7 @@ public class OrderMapper {
                             product.getPrice(),
                             product.getImageUrl(),
                             product.getStock_quantity(),
-                            product.getNumber_Of_Purchases()
+                            entry.getValue() // quantity
                     );
                 })
                 .collect(Collectors.toList());
@@ -69,7 +69,6 @@ public class OrderMapper {
                 product.setImageUrl(pqDto.getImageUrl());
                 product.setStock_quantity(pqDto.getStock_quantity());
                 product.setNumber_Of_Purchases(pqDto.getNumber_Of_Purchases());
-
             }
             order.setProductQuantities(productQuantities);
         }

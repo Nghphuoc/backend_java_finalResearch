@@ -2,7 +2,9 @@ package jpa.projectresearch.Dto;
 
 public  class ProductQuantityDto {
         private Long productId;
+
         private int quantity;
+
         private String productName;
 
         private String description;

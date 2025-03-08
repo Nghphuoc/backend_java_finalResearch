@@ -35,7 +35,7 @@ public class Security {
                 .requestMatchers("/api/auth/public/**").permitAll() // Cho phép truy cập công khai
                 .requestMatchers("/api/payment/**").permitAll()
                 .requestMatchers("/favicon.ico/**").permitAll()
-
+                        .requestMatchers("/api/user/update/info-user").permitAll()
 
                 .requestMatchers(HttpMethod.POST, "/api/order/search").permitAll() // Cho phép truy cập công khai
                 .requestMatchers(HttpMethod.GET, "/api/product/**").permitAll()
