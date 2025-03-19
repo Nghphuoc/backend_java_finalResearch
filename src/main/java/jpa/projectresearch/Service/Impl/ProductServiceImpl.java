@@ -60,18 +60,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductDto createProduct(ProductDto productDto, MultipartFile file) {
+    public ProductDto createProduct(ProductDto productDto) {
         // Upload image to Cloudinary and get the image URL
-        String imageUrl;
-        try {
-            imageUrl = uploadImage(file);  // uploadImage() should handle file uploading and return the URL
-        } catch (IOException e) {
-            throw new ProductImageUploadException("Failed to upload product image", e);  // Custom exception for clarity
-        }
+//        String imageUrl;
+//        try {
+//            imageUrl = uploadImage(file);  // uploadImage() should handle file uploading and return the URL
+//        } catch (IOException e) {
+//            throw new ProductImageUploadException("Failed to upload product image", e);  // Custom exception for clarity
+//        }
 
         // Map the ProductDto to Product entity
         Product product = ProductMapper.mapProductDto(productDto);
-        product.setImageUrl(imageUrl);  // Set image URL in the Product entity
+        //product.setImageUrl(productDto.getImageUrl());  // Set image URL in the Product entity
 
         // Ensure categories are not null and set them properly
         if (product.getCategories() != null && !product.getCategories().isEmpty()) {
@@ -81,10 +81,8 @@ public class ProductServiceImpl implements ProductService {
                     .collect(Collectors.toList());  // Using Collectors.toList()
             product.setCategories(categories);
         }
-
         // Save the product to the database
         Product savedProduct = productRepository.save(product);
-
         // Return the mapped ProductDto
         return ProductMapper.mapProduct(savedProduct);
     }

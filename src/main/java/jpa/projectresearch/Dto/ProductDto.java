@@ -1,8 +1,6 @@
 package jpa.projectresearch.Dto;
 
-import jpa.projectresearch.Entity.Cart;
 import jpa.projectresearch.Entity.Category;
-import jpa.projectresearch.Entity.Order;
 import jpa.projectresearch.Entity.User;
 import lombok.Data;
 
@@ -26,14 +24,9 @@ public class ProductDto {
 
     private int number_Of_Purchases;
 
-
-
     private List<Category> categories;
 
-
-
     private User user;
-
 
     public ProductDto(Long productId, String productName, String description, Double price, String imageUrl, int stock_quantity, int number_Of_Purchases, List<Category> categories, User user) {
         this.productId = productId;

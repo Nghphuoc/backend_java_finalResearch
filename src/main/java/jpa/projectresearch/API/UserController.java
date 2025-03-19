@@ -1,5 +1,6 @@
 package jpa.projectresearch.API;
 
+import jpa.projectresearch.Dto.UpdateUser;
 import jpa.projectresearch.Dto.UserDto;
 import jpa.projectresearch.Dto.UserUpdate;
 import jpa.projectresearch.RequestUser.LoginRequest;
@@ -46,7 +47,7 @@ public class UserController {
 
     @PutMapping("/personal/{Id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("Id") Long Id
-                                              ,@RequestBody UserDto user){
+                                              ,@RequestBody UpdateUser user){
         UserDto userDto = userService.UpdateUser(Id,user);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }

@@ -1,19 +1,11 @@
 package jpa.projectresearch.Dto;
-
 import jpa.projectresearch.Entity.Cart;
 import jpa.projectresearch.Entity.Order;
 import jpa.projectresearch.Entity.Role;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@NoArgsConstructor
-@Getter
-@Setter
 public class UserDto {
     private Long userId;
 

@@ -1,9 +1,6 @@
 package jpa.projectresearch.Service.Impl;
 
-import jpa.projectresearch.Dto.OrderDto;
-import jpa.projectresearch.Dto.ProductDto;
-import jpa.projectresearch.Dto.ProductQuantityDto;
-import jpa.projectresearch.Dto.RasaOrder;
+import jpa.projectresearch.Dto.*;
 import jpa.projectresearch.Entity.Order;
 import jpa.projectresearch.Entity.Product;
 import jpa.projectresearch.Entity.User;
@@ -46,17 +43,15 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public OrderDto CreateOrder(OrderDto orderDto) {
         Order order = OrderMapper.mapOrderDto(orderDto);
-        if((order.getStatusBanking() == null) ){
-            order.setCheckPayment(false);
-            order.setStatusBanking(Variable.setStatusBanking.Cash);
-        }
+        order.setCheckPayment(order.getStatusBanking() != Variable.setStatusBanking.Cash);
+
         // Kiểm tra và lấy User từ cơ sở dữ liệu
         if (order.getUser() != null && order.getUser().getUserId() != null ) {
             User user = userRepository.findById(order.getUser().getUserId())
                     .orElseThrow(() -> new RuntimeException("Không tìm thấy User với ID: " + order.getUser().getUserId()));
             // get product when user add
             order.setUser(user);
-            order.setOrderName(user.getFullName());// Liên kết User vào Order
+            order.setOrderName(user.getFullName());// Liên kết User vào Order change to mail unique
         }
         else {
             System.out.println("require much have user to create order");
@@ -134,5 +129,13 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return finalOrders.stream().map(OrderMapper::mapOrder).collect(Collectors.toList());
+    }
+
+    @Override
+    public OrderDto updateStatus(Long id, UpdateOrderStatus status) {
+        Order order1 = orderRepository.findById(id).orElseThrow(()->new RuntimeException("cannot find category"));
+            order1.setStatus(status.getStatus());
+        orderRepository.save(order1);
+        return OrderMapper.mapOrder(order1);
     }
 }

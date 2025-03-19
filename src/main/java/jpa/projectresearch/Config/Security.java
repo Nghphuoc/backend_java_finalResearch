@@ -41,7 +41,8 @@ public class Security {
                 .requestMatchers(HttpMethod.GET, "/api/product/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/product/search").permitAll()
                 .requestMatchers( "/api/product").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/user/info").hasRole("USER")
+                .requestMatchers( "/api/category").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/user/info").hasAnyRole("USER","ADMIN")
                 // Các endpoint cụ thể cho USER
                 .requestMatchers(HttpMethod.GET, "/api/cart/**").hasRole("USER")
                 .requestMatchers(HttpMethod.PUT, "/api/cart/**").hasRole("USER") // add product on cart remove or update info
@@ -49,9 +50,10 @@ public class Security {
                 .requestMatchers(HttpMethod.GET, "/api/order/**").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/order/**").hasAnyRole("USER","ADMIN")
 
+                .requestMatchers(HttpMethod.PUT, "/api/order/update/**").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/order/**").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/user/personal/**").hasAnyRole("USER","ADMIN")
-//                .requestMatchers(HttpMethod.PUT, "/api/user/personal/**").hasRole("USER")
+                .requestMatchers(HttpMethod.PUT, "/api/user/personal/**").permitAll()
 
                 // Các endpoint cụ thể cho ADMIN
                 .requestMatchers("/api/order/**").hasRole("ADMIN")
@@ -59,7 +61,6 @@ public class Security {
                 .requestMatchers("/api/product/**").hasRole("ADMIN")
                 .requestMatchers("/api/category/**").hasRole("ADMIN")
                 .requestMatchers("/api/user/**").hasRole("ADMIN")
-
 
 
                 // Bất kỳ request nào khác cần xác thực

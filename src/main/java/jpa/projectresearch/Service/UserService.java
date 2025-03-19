@@ -1,5 +1,6 @@
 package jpa.projectresearch.Service;
 
+import jpa.projectresearch.Dto.UpdateUser;
 import jpa.projectresearch.Dto.UserDto;
 import jpa.projectresearch.Entity.User;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ public interface UserService {
 
     UserDto CreateUser(UserDto userDto);
 
-    UserDto UpdateUser(Long id,UserDto userDto);
+    UserDto UpdateUser(Long id, UpdateUser userDto);
 
     void DeleteUser(Long theId);
 

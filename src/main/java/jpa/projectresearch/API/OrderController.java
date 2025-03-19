@@ -2,7 +2,9 @@ package jpa.projectresearch.API;
 
 import jpa.projectresearch.Dto.OrderDto;
 import jpa.projectresearch.Dto.RasaOrder;
+import jpa.projectresearch.Dto.UpdateOrderStatus;
 import jpa.projectresearch.Service.OrderService;
+import jpa.projectresearch.Variable.Variable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,4 +59,11 @@ public class OrderController {
         }
         return ResponseEntity.ok(orders);
     }
+
+    @PutMapping("update/{Id}")
+    public ResponseEntity<OrderDto> updateStatus(@PathVariable Long Id, @RequestBody UpdateOrderStatus orderDto){
+        OrderDto orderDto1 = orderService.updateStatus(Id, orderDto);
+        return new ResponseEntity<>(orderDto1, HttpStatus.OK);
+    }
+
 }

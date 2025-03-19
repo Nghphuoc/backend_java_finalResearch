@@ -1,5 +1,6 @@
 package jpa.projectresearch.Service.Impl;
 
+import jpa.projectresearch.Dto.UpdateUser;
 import jpa.projectresearch.Dto.UserDto;
 import jpa.projectresearch.Entity.Cart;
 import jpa.projectresearch.Entity.User;
@@ -52,11 +53,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto UpdateUser(Long id,UserDto userDto){
+    public UserDto UpdateUser(Long id, UpdateUser userDto){
         User userUpdate = userRepository.findById(id).orElseThrow(()->new RuntimeException("cannot find by id: "+id));
         userUpdate.setFullName(userDto.getFullName());
-        userUpdate.setEmail(userDto.getEmail());
-        userUpdate.setPassword(userDto.getPassword());
         userUpdate.setPhone(userDto.getPhone());
         userUpdate.setAddress(userDto.getAddress());
         User savedUser = userRepository.save(userUpdate);

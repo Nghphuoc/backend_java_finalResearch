@@ -1,10 +1,9 @@
 package jpa.projectresearch.Service;
-
 import jpa.projectresearch.Dto.OrderDto;
-import jpa.projectresearch.Dto.RasaOrder;
+import jpa.projectresearch.Dto.UpdateOrderStatus;
 import jpa.projectresearch.Entity.Order;
+import jpa.projectresearch.Variable.Variable;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 @Component
@@ -23,4 +22,6 @@ public interface OrderService {
     List<Order> finOrderByOrderName(String theName);
 
     List<OrderDto> findByOrderNames(String name);
+
+    OrderDto updateStatus(Long id, UpdateOrderStatus order);
 }
