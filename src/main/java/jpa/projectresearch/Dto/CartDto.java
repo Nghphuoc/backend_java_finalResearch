@@ -1,6 +1,5 @@
 package jpa.projectresearch.Dto;
 
-import jpa.projectresearch.Entity.Product;
 import jpa.projectresearch.Entity.User;
 import lombok.*;
 

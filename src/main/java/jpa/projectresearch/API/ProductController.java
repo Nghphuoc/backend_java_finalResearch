@@ -1,6 +1,4 @@
 package jpa.projectresearch.API;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jpa.projectresearch.Dto.ProductDto;
 import jpa.projectresearch.Dto.RasaProduct;
 import jpa.projectresearch.Entity.Product;
@@ -21,7 +19,7 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductDto>> addProduct(ProductDto product) {
+    public ResponseEntity<List<ProductDto>> getAllProduct() {
         List<ProductDto> productDto = productService.getAllProducts();
         return ResponseEntity.ok(productDto);
     }

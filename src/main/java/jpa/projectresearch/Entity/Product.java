@@ -65,7 +65,6 @@ public class Product {
     @JsonIgnore
     private User user;
 
-
     public Product(){
 
     }
@@ -80,7 +79,6 @@ public class Product {
         this.categories = categories;
         this.number_Of_Purchases = number_Of_Purchases;
         this.user = user;
-
     }
 
     public int getNumber_Of_Purchases() {
@@ -187,6 +185,5 @@ public class Product {
                 ", user=" + user +
                 '}';
     }
-
 
 }

@@ -39,6 +39,7 @@ public class Order {
     private List<Product> products;
 
 
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "order_product_quantity", joinColumns = @JoinColumn(name = "order_id"))
     @MapKeyJoinColumn(name = "product_id")

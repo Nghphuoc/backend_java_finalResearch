@@ -40,7 +40,7 @@ public class Security {
                 .requestMatchers(HttpMethod.POST, "/api/order/search").permitAll() // Cho phép truy cập công khai
                 .requestMatchers(HttpMethod.GET, "/api/product/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/product/search").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/product").permitAll()
+                .requestMatchers( "/api/product").permitAll()
                 .requestMatchers( "/api/category").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/user/info").hasAnyRole("USER","ADMIN")
                 // Các endpoint cụ thể cho USER
