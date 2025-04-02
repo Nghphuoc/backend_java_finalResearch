@@ -1,4 +1,5 @@
 package jpa.projectresearch.API;
+import jakarta.persistence.EntityManager;
 import jpa.projectresearch.Dto.ProductDto;
 import jpa.projectresearch.Dto.RasaProduct;
 import jpa.projectresearch.Entity.Product;
@@ -57,4 +58,15 @@ public class ProductController {
         }
         return ResponseEntity.ok("Không tìm thấy sản phẩm");
     }
+
+    @PutMapping("/sale")
+    public ResponseEntity<?> saleProduct(@RequestBody List<Long> listId) {
+        if(listId.isEmpty()) {
+            return new ResponseEntity<>("error set product sale", HttpStatus.BAD_REQUEST);
+        }
+        productService.updateSale(listId);
+        return new ResponseEntity<>("Product sale successfully !", HttpStatus.OK);
+
+    }
+
 }

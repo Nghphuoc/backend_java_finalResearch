@@ -3,7 +3,7 @@ package jpa.projectresearch.Service;
 import jpa.projectresearch.Dto.ProductDto;
 import jpa.projectresearch.Entity.Product;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public interface ProductService {
 
     void deleteProduct(Long id);
 
-    List<Product> findProductName(String name);
+    void updateSale(List<Long> listNumber);
 
     List<Product> findByProductNameContainingIgnoreCase(String name);
 

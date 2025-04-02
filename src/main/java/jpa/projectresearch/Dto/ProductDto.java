@@ -24,6 +24,8 @@ public class ProductDto {
 
     private int number_Of_Purchases;
 
+    private Boolean checkSale;
+
     private List<Category> categories;
 
     private User user;
@@ -36,6 +38,19 @@ public class ProductDto {
         this.imageUrl = imageUrl;
         this.stock_quantity = stock_quantity;
         this.number_Of_Purchases = number_Of_Purchases;
+        this.categories = categories;
+        this.user = user;
+    }
+
+    public ProductDto(Long productId, String productName, String description, Double price, String imageUrl, int stock_quantity, int number_Of_Purchases, Boolean checkSale, List<Category> categories, User user) {
+        this.productId = productId;
+        this.productName = productName;
+        this.description = description;
+        this.price = price;
+        this.imageUrl = imageUrl;
+        this.stock_quantity = stock_quantity;
+        this.number_Of_Purchases = number_Of_Purchases;
+        this.checkSale = checkSale;
         this.categories = categories;
         this.user = user;
     }
@@ -115,16 +130,14 @@ public class ProductDto {
         this.user = user;
     }
 
-
-
-    public ProductDto(String productName, String description, Double price, String imageUrl, int stock_quantity, int number_Of_Purchases) {
-        this.productName = productName;
-        this.description = description;
-        this.price = price;
-        this.imageUrl = imageUrl;
-        this.stock_quantity = stock_quantity;
-        this.number_Of_Purchases = number_Of_Purchases;
+    public Boolean getCheckSale() {
+        return checkSale;
     }
+
+    public void setCheckSale(Boolean checkSale) {
+        this.checkSale = checkSale;
+    }
+
     public ProductDto(){
 
     }

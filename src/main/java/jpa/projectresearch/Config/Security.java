@@ -41,6 +41,7 @@ public class Security {
                 .requestMatchers(HttpMethod.GET, "/api/product/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/product/search").permitAll()
                 .requestMatchers( "/api/product").permitAll()
+                .requestMatchers( "/api/product/sale").hasRole("ADMIN")
                 .requestMatchers( "/api/category").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/user/info").hasAnyRole("USER","ADMIN")
                 // Các endpoint cụ thể cho USER

@@ -3,6 +3,7 @@ package jpa.projectresearch.Service.Impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import jpa.projectresearch.Dto.ProductDto;
+import jpa.projectresearch.Entity.Cart;
 import jpa.projectresearch.Entity.Category;
 import jpa.projectresearch.Entity.Product;
 import jpa.projectresearch.Mapper.ProductMapper;
@@ -61,6 +62,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductDto createProduct(ProductDto productDto) {
+
         // Upload image to Cloudinary and get the image URL
 //        String imageUrl;
 //        try {
@@ -72,7 +74,9 @@ public class ProductServiceImpl implements ProductService {
         // Map the ProductDto to Product entity
         Product product = ProductMapper.mapProductDto(productDto);
         //product.setImageUrl(productDto.getImageUrl());  // Set image URL in the Product entity
-
+        if(product.getCheckSale() == null){
+            product.setCheckSale(false);
+        }
         // Ensure categories are not null and set them properly
         if (product.getCategories() != null && !product.getCategories().isEmpty()) {
             List<Category> categories = product.getCategories().stream()
@@ -81,6 +85,7 @@ public class ProductServiceImpl implements ProductService {
                     .collect(Collectors.toList());  // Using Collectors.toList()
             product.setCategories(categories);
         }
+
         // Save the product to the database
         Product savedProduct = productRepository.save(product);
         // Return the mapped ProductDto
@@ -98,6 +103,7 @@ public class ProductServiceImpl implements ProductService {
         productUpdate.setImageUrl(productDto.getImageUrl());
         productUpdate.setStock_quantity(productDto.getStock_quantity());
         productUpdate.setCategories(productDto.getCategories());
+        //productUpdate.setCheckSale(productDto.getCheckSale());
         Product savedProduct = productRepository.save(productUpdate);
         return ProductMapper.mapProduct(savedProduct);
     }
@@ -111,10 +117,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional
-    public List<Product> findProductName(String name) {
-        return (productRepository.findByProductName(name));
+    public void updateSale(List<Long> listNumber) {
+        for (Long id : listNumber) {
+            Product product = productRepository.findById(id).orElseThrow(()->new RuntimeException("cannot find product with id: " + id));
+            product.setCheckSale(!product.getCheckSale());
+            productRepository.save(product);
+        }
     }
+
+//    @Override
+//    @Transactional
+//    public List<Product> findProductName(String name) {
+//        return (productRepository.findByProductName(name));
+//    }
 
     @Override
     public List<Product> findByProductNameContainingIgnoreCase(String name) {

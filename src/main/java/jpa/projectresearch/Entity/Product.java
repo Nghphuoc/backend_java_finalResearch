@@ -34,6 +34,9 @@ public class Product {
     @Column(name = "number_Of_Purchases")
     private int number_Of_Purchases; // số lượng đã bán
 
+    @Column(name = "checkSale")
+    private Boolean checkSale;  //  new
+
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(
             name = "cart_item",
@@ -67,18 +70,6 @@ public class Product {
 
     public Product(){
 
-    }
-
-    public Product(Long productId, String productName, String description, Double price, String imageUrl, int stock_quantity,int number_Of_Purchases, List<Category> categories, User user) {
-        this.productId = productId;
-        this.productName = productName;
-        this.description = description;
-        this.price = price;
-        this.imageUrl = imageUrl;
-        this.stock_quantity = stock_quantity;
-        this.categories = categories;
-        this.number_Of_Purchases = number_Of_Purchases;
-        this.user = user;
     }
 
     public int getNumber_Of_Purchases() {
@@ -166,6 +157,29 @@ public class Product {
     }
 
     public void setUser(User user) {
+        this.user = user;
+    }
+
+
+    public Boolean getCheckSale() {
+        return checkSale;
+    }
+
+    public void setCheckSale(Boolean checkSale) {
+        this.checkSale = checkSale;
+    }
+
+    public Product(Long productId, String productName, String description, Double price, String imageUrl, int stock_quantity, int number_Of_Purchases, Boolean checkSale, List<Category> categories, User user) {
+        this.productId = productId;
+        this.productName = productName;
+        this.description = description;
+        this.price = price;
+        this.imageUrl = imageUrl;
+        this.stock_quantity = stock_quantity;
+        this.number_Of_Purchases = number_Of_Purchases;
+        this.checkSale = checkSale;
+        this.categories = categories;
+        this.orders = orders;
         this.user = user;
     }
 
